@@ -9,7 +9,7 @@ import './App.css'
 
 const CARDS = [
 	{
-		id: 31,
+		id: 1,
 		engWord: `married`,
 		plWord: `w związku małżeńskim`,
 		engSentence: `Recruiters should not ask cadidates if they are merried.`,
@@ -17,7 +17,23 @@ const CARDS = [
 		status: 'unknown',
 	},
 	{
-		id: 32,
+		id: 2,
+		engWord: `single`,
+		plWord: `stanu wolnego`,
+		engSentence: `We are looking to hire a single girl as an au pair.`,
+		plSentence: 'Chcemy zatrudzić dziewczynę stanu wolnego jako opiekunkę dla dzieci.',
+		status: 'unknown',
+	},
+	{
+		id: 3,
+		engWord: `single`,
+		plWord: `stanu wolnego`,
+		engSentence: `We are looking to hire a single girl as an au pair.`,
+		plSentence: 'Chcemy zatrudzić dziewczynę stanu wolnego jako opiekunkę dla dzieci.',
+		status: 'unknown',
+	},
+	{
+		id: 4,
 		engWord: `single`,
 		plWord: `stanu wolnego`,
 		engSentence: `We are looking to hire a single girl as an au pair.`,
@@ -29,6 +45,7 @@ const CARDS = [
 const App = () => {
 	const [cards, setCards] = useState(CARDS)
 	const [turnedCard, setTurnedCard] = useState(false)
+	const [displayedCard, setDisplayedCard] = useState(1)
 
 	const addToKnowHandler = (id, status) => {
 		setCards(prevState => {
@@ -38,58 +55,68 @@ const App = () => {
 				plWord: card.plWord,
 				engSentence: card.engSentence,
 				plSentence: card.plSentence,
-				status: card.id === id ? card.status : status,
+				status: card.id === id ? status : card.status,
 			}))
 			return updatedTask
 		})
+		setTurnedCard(false)
+		setDisplayedCard(prevState => (prevState += 1))
 	}
 
 	return (
 		<div className='App'>
-			{cards.map(({ id, engWord, engSentence, plWord, plSentence, status }) => (
-				<Card key={id} sx={{ margin: 2, padding: 2, maxWidth: '400px', position: 'relative' }}>
-					<Text sx={{ position: 'absolute', top: 0, right: 0 }}>{id}</Text>
-					{turnedCard && (
-						<>
-							<Text sx={{ fontWeight: 700 }}>{engWord}</Text>
-							<Text>{engSentence}</Text>
-							<Text>{status}</Text>
-							<PrimaryButton
-								variant='contained'
-								color='success'
-								endIcon={<Check />}
-								sx={{ m: 1 }}
-								onClick={addToKnowHandler(id, status)}>
-								I know
-							</PrimaryButton>
-							<PrimaryButton
-								variant='contained'
-								color='error'
-								endIcon={<CloseIcon />}
-								sx={{ m: 1 }}
-								onClick={addToKnowHandler(id, status)}>
-								I don't know
-							</PrimaryButton>
-						</>
-					)}
+			{cards.map(({ id, engWord, engSentence, plWord, plSentence, status }) => {
+				if (displayedCard === id) {
+					return (
+						<Card key={id} sx={{ margin: 2, padding: 2, maxWidth: '400px', position: 'relative' }}>
+							<Text sx={{ position: 'absolute', top: 0, right: 0 }}>{id}</Text>
+							{turnedCard && (
+								<>
+									<Text sx={{ fontWeight: 700 }}>{engWord}</Text>
+									<Text>{engSentence}</Text>
+									<Text>{status}</Text>
+									<PrimaryButton
+										variant='contained'
+										color='success'
+										endIcon={<Check />}
+										sx={{ m: 1 }}
+										id={id}
+										status='known'
+										onClick={addToKnowHandler}>
+										I know
+									</PrimaryButton>
+									<PrimaryButton
+										variant='contained'
+										color='error'
+										endIcon={<CloseIcon />}
+										sx={{ m: 1 }}
+										id={id}
+										status='unknown'
+										onClick={addToKnowHandler}>
+										I don't know
+									</PrimaryButton>
+								</>
+							)}
 
-					{!turnedCard && (
-						<>
-							<Text sx={{ fontWeight: 700 }}>{plWord}</Text>
-							<Text>{plSentence}</Text>
-							<PrimaryButton
-								variant='contained'
-								color='primary'
-								endIcon={<RefreshIcon />}
-								onClick={() => {
-									setTurnedCard(prevState => !prevState)
-								}}>
-								Return
-							</PrimaryButton>
-						</>
-					)}
-				</Card>
-			))}
+							{!turnedCard && (
+								<>
+									<Text sx={{ fontWeight: 700 }}>{plWord}</Text>
+									<Text>{plSentence}</Text>
+									<PrimaryButton
+										variant='contained'
+										color='primary'
+										endIcon={<RefreshIcon />}
+										onClick={() => {
+											setTurnedCard(true)
+										}}>
+										Return
+									</PrimaryButton>
+								</>
+							)}
+						</Card>
+					)
+				}
+			})}
 		</div>
 	)
 }
