@@ -65,58 +65,65 @@ const App = () => {
 
 	return (
 		<div className='App'>
-			{cards.map(({ id, engWord, engSentence, plWord, plSentence, status }) => {
-				if (displayedCard === id) {
-					return (
-						<Card key={id} sx={{ margin: 2, padding: 2, maxWidth: '400px', position: 'relative' }}>
-							<Text sx={{ position: 'absolute', top: 0, right: 0 }}>{id}</Text>
-							{turnedCard && (
-								<>
-									<Text sx={{ fontWeight: 700 }}>{engWord}</Text>
-									<Text>{engSentence}</Text>
-									<Text>{status}</Text>
-									<PrimaryButton
-										variant='contained'
-										color='success'
-										endIcon={<Check />}
-										sx={{ m: 1 }}
-										id={id}
-										status='known'
-										onClick={addToKnowHandler}>
-										I know
-									</PrimaryButton>
-									<PrimaryButton
-										variant='contained'
-										color='error'
-										endIcon={<CloseIcon />}
-										sx={{ m: 1 }}
-										id={id}
-										status='unknown'
-										onClick={addToKnowHandler}>
-										I don't know
-									</PrimaryButton>
-								</>
-							)}
+			{cards
+				.filter(card => displayedCard === card.id)
+				.map(({ id, engWord, engSentence, plWord, plSentence }) => (
+					<Card
+						key={id}
+						sx={{
+							position: 'relative',
+							width: '90%',
+							minWidth: '360px',
+							maxWidth: '400px',
+							textAlign: 'center',
+							margin: 2,
+							padding: 2,
+						}}>
+						<Text sx={{ position: 'absolute', top: 0, right: 0 }}>{id}</Text>
+						{turnedCard && (
+							<>
+								<Text sx={{ fontWeight: 700 }}>{engWord}</Text>
+								<Text>{engSentence}</Text>
+								<PrimaryButton
+									variant='contained'
+									color='success'
+									endIcon={<Check />}
+									sx={{ m: 1 }}
+									id={id}
+									status='known'
+									onClick={addToKnowHandler}>
+									I know
+								</PrimaryButton>
+								<PrimaryButton
+									variant='contained'
+									color='error'
+									endIcon={<CloseIcon />}
+									sx={{ m: 1 }}
+									id={id}
+									status='unknown'
+									onClick={addToKnowHandler}>
+									I don't know
+								</PrimaryButton>
+							</>
+						)}
 
-							{!turnedCard && (
-								<>
-									<Text sx={{ fontWeight: 700 }}>{plWord}</Text>
-									<Text>{plSentence}</Text>
-									<PrimaryButton
-										variant='contained'
-										color='primary'
-										endIcon={<RefreshIcon />}
-										onClick={() => {
-											setTurnedCard(true)
-										}}>
-										Return
-									</PrimaryButton>
-								</>
-							)}
-						</Card>
-					)
-				}
-			})}
+						{!turnedCard && (
+							<>
+								<Text sx={{ fontWeight: 700 }}>{plWord}</Text>
+								<Text>{plSentence}</Text>
+								<PrimaryButton
+									variant='contained'
+									color='primary'
+									endIcon={<RefreshIcon />}
+									onClick={() => {
+										setTurnedCard(true)
+									}}>
+									Return
+								</PrimaryButton>
+							</>
+						)}
+					</Card>
+				))}
 		</div>
 	)
 }
