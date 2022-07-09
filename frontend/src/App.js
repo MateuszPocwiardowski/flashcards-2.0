@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Navbar from './components/Navbar/Navbar'
 import Footer from './components/Footer/Footer'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
 import Card from '@mui/material/Card'
 import Check from '@mui/icons-material/Check'
 import RefreshIcon from '@mui/icons-material/Refresh'
@@ -44,6 +45,15 @@ const CARDS = [
 	},
 ]
 
+const darkTheme = createTheme({
+	palette: {
+		mode: 'dark',
+		primary: {
+			main: '#1976d2',
+		},
+	},
+})
+
 const App = () => {
 	const [cards, setCards] = useState(CARDS)
 	const [turnedCard, setTurnedCard] = useState(false)
@@ -67,20 +77,24 @@ const App = () => {
 
 	return (
 		<div className='App'>
-			<Navbar />
+			<ThemeProvider theme={darkTheme}>
+				<Navbar />
+			</ThemeProvider>
 			{cards
 				.filter(card => displayedCard === card.id)
 				.map(({ id, engWord, engSentence, plWord, plSentence }) => (
 					<Card
 						key={id}
 						sx={{
-							position: 'relative',
+							position: 'absolute',
+							top: '50%',
+							left: '50%',
 							width: '90%',
 							minWidth: '360px',
 							maxWidth: '400px',
 							textAlign: 'center',
-							margin: 2,
 							padding: 2,
+							transform: 'translate(-50%, -50%)',
 						}}>
 						<Text sx={{ position: 'absolute', top: 0, right: 0 }}>{id}</Text>
 						{turnedCard && (
@@ -127,7 +141,9 @@ const App = () => {
 						)}
 					</Card>
 				))}
-			<Footer />
+			<ThemeProvider theme={darkTheme}>
+				<Footer />
+			</ThemeProvider>
 		</div>
 	)
 }
