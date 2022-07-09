@@ -10,7 +10,7 @@ export default function Navbar() {
 	const year = new Date().getFullYear()
 
 	return (
-		<Box>
+		<Box sx={{ width: '100%' }}>
 			<AppBar position='static'>
 				<Toolbar sx={{ textAlign: 'center' }}>
 					<Typography variant='body1' component='div' sx={{ flexGrow: 1 }}></Typography>

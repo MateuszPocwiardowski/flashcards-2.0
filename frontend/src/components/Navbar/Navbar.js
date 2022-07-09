@@ -8,7 +8,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 
 export default function Navbar() {
 	return (
-		<Box>
+		<Box sx={{ width: '100%' }}>
 			<AppBar position='static'>
 				<Toolbar>
 					<IconButton size='large' edge='start' color='inherit' aria-label='menu' sx={{ mr: 2 }}>
