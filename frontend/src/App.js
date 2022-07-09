@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import Navbar from './components/Navbar/Navbar'
+import Footer from './components/Footer/Footer'
 import Card from '@mui/material/Card'
 import Check from '@mui/icons-material/Check'
 import RefreshIcon from '@mui/icons-material/Refresh'
@@ -65,6 +67,7 @@ const App = () => {
 
 	return (
 		<div className='App'>
+			<Navbar />
 			{cards
 				.filter(card => displayedCard === card.id)
 				.map(({ id, engWord, engSentence, plWord, plSentence }) => (
@@ -124,6 +127,7 @@ const App = () => {
 						)}
 					</Card>
 				))}
+			<Footer />
 		</div>
 	)
 }
