@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import Navbar from './components/Navbar/Navbar'
 import Footer from './components/Footer/Footer'
-import { ThemeProvider, createTheme } from '@mui/material/styles'
 import Card from '@mui/material/Card'
 import Check from '@mui/icons-material/Check'
 import RefreshIcon from '@mui/icons-material/Refresh'
@@ -45,15 +44,6 @@ const CARDS = [
 	},
 ]
 
-const darkTheme = createTheme({
-	palette: {
-		mode: 'dark',
-		primary: {
-			main: '#1976d2',
-		},
-	},
-})
-
 const App = () => {
 	const [cards, setCards] = useState(CARDS)
 	const [turnedCard, setTurnedCard] = useState(false)
@@ -77,9 +67,7 @@ const App = () => {
 
 	return (
 		<div className='App'>
-			<ThemeProvider theme={darkTheme}>
-				<Navbar />
-			</ThemeProvider>
+			<Navbar />
 			{cards
 				.filter(card => displayedCard === card.id)
 				.map(({ id, engWord, engSentence, plWord, plSentence }) => (
@@ -141,9 +129,7 @@ const App = () => {
 						)}
 					</Card>
 				))}
-			<ThemeProvider theme={darkTheme}>
-				<Footer />
-			</ThemeProvider>
+			<Footer />
 		</div>
 	)
 }
