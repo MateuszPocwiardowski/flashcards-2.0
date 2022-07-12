@@ -10,7 +10,7 @@ export default function Navbar() {
 		<Box>
 			<AppBar position='fixed' sx={{ top: 'auto', bottom: 0 }}>
 				<Toolbar sx={{ textAlign: 'center' }}>
-					<Typography variant='body1' component='div' sx={{ flexGrow: 1 }}></Typography>
+					<Typography variant='body1' component='div' sx={{ flexGrow: 1 }}>Mateusz Poćwiardowski | {year}</Typography>
 				</Toolbar>
 			</AppBar>
 		</Box>
