@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import useFetch from './hooks/useFetch'
 import Navbar from './components/Navbar/Navbar'
 import Footer from './components/Footer/Footer'
 import Card from '@mui/material/Card'
@@ -49,7 +50,30 @@ const App = () => {
 	const [turnedCard, setTurnedCard] = useState(false)
 	const [displayedCard, setDisplayedCard] = useState(1)
 
-	const addToKnowHandler = (id, status) => {
+	const [dummyCard, setDummyCard] = useFetch('https://swapi.dev/api/people/1/?format=json')
+
+	// const addToKnownHandler = (id, status) => {
+	// 	setCards(prevState => {
+	// 		const updatedTask = prevState.map(card => ({
+	// 			id: card.id,
+	// 			engWord: card.engWord,
+	// 			plWord: card.plWord,
+	// 			engSentence: card.engSentence,
+	// 			plSentence: card.plSentence,
+	// 			status: card.id === id ? 'known' : card.status,
+	// 		}))
+	// 		return updatedTask
+	// 	})
+	// 	setTurnedCard(false)
+	// 	setDisplayedCard(prevState => (prevState += 1))
+	// }
+
+	const addToKnownHandler = () => {
+		setDummyCard('https://swapi.dev/api/people/1/?format=json')
+		console.log(dummyCard)
+	}
+
+	const addToUnknownHandler = (id, status) => {
 		setCards(prevState => {
 			const updatedTask = prevState.map(card => ({
 				id: card.id,
@@ -57,12 +81,11 @@ const App = () => {
 				plWord: card.plWord,
 				engSentence: card.engSentence,
 				plSentence: card.plSentence,
-				status: card.id === id ? status : card.status,
+				status: card.id === id ? 'unknown' : card.status,
 			}))
 			return updatedTask
 		})
 		setTurnedCard(false)
-		setDisplayedCard(prevState => (prevState += 1))
 	}
 
 	return (
@@ -84,11 +107,18 @@ const App = () => {
 							padding: 2,
 							transform: 'translate(-50%, -50%)',
 						}}>
-						<Text sx={{ position: 'absolute', top: 0, right: 0 }}>{id}</Text>
+						<Text
+							sx={{
+								position: 'absolute',
+								top: 0,
+								right: 0,
+							}}>
+							{id}
+						</Text>
 						{turnedCard && (
 							<>
 								<Text sx={{ fontWeight: 700 }}>{engWord}</Text>
-								<Text>{engSentence}</Text>
+								<Text sx={{ mb: 2 }}>{engSentence}</Text>
 								<PrimaryButton
 									variant='contained'
 									color='success'
@@ -96,7 +126,7 @@ const App = () => {
 									sx={{ m: 1 }}
 									id={id}
 									status='known'
-									onClick={addToKnowHandler}>
+									onClick={addToKnownHandler}>
 									I know
 								</PrimaryButton>
 								<PrimaryButton
@@ -106,7 +136,7 @@ const App = () => {
 									sx={{ m: 1 }}
 									id={id}
 									status='unknown'
-									onClick={addToKnowHandler}>
+									onClick={addToUnknownHandler}>
 									I don't know
 								</PrimaryButton>
 							</>
@@ -115,7 +145,7 @@ const App = () => {
 						{!turnedCard && (
 							<>
 								<Text sx={{ fontWeight: 700 }}>{plWord}</Text>
-								<Text>{plSentence}</Text>
+								<Text sx={{ mb: 2 }}>{plSentence}</Text>
 								<PrimaryButton
 									variant='contained'
 									color='primary'
