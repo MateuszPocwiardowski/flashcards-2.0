@@ -51,27 +51,23 @@ const App = () => {
 	const [turnedCard, setTurnedCard] = useState(false)
 	const [displayedCard, setDisplayedCard] = useState(1)
 
-	const [dummyCard, setDummyCard] = useFetch('')
+	const { data, loading, error } = useFetch('https://swapi.dev/api/people/1/?format=json')
+	console.log(data, loading, error)
 
-	// const addToKnownHandler = (id, status) => {
-	// 	setCards(prevState => {
-	// 		const updatedTask = prevState.map(card => ({
-	// 			id: card.id,
-	// 			engWord: card.engWord,
-	// 			plWord: card.plWord,
-	// 			engSentence: card.engSentence,
-	// 			plSentence: card.plSentence,
-	// 			status: card.id === id ? 'known' : card.status,
-	// 		}))
-	// 		return updatedTask
-	// 	})
-	// 	setTurnedCard(false)
-	// 	setDisplayedCard(prevState => (prevState += 1))
-	// }
-
-	const addToKnownHandler = () => {
-		setDummyCard('https://swapi.dev/api/people/1/?format=json')
-		console.log(dummyCard)
+	const addToKnownHandler = (id, status) => {
+		setCards(prevState => {
+			const updatedTask = prevState.map(card => ({
+				id: card.id,
+				engWord: card.engWord,
+				plWord: card.plWord,
+				engSentence: card.engSentence,
+				plSentence: card.plSentence,
+				status: card.id === id ? 'known' : card.status,
+			}))
+			return updatedTask
+		})
+		setTurnedCard(false)
+		setDisplayedCard(prevState => (prevState += 1))
 	}
 
 	const addToUnknownHandler = (id, status) => {
