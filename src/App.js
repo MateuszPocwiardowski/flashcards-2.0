@@ -1,4 +1,5 @@
 import { useState } from 'react'
+// eslint-disable-next-line
 import useFetch from './hooks/useFetch'
 import Navbar from './components/Navbar/Navbar'
 import Footer from './components/Footer/Footer'
@@ -50,7 +51,7 @@ const App = () => {
 	const [turnedCard, setTurnedCard] = useState(false)
 	const [displayedCard, setDisplayedCard] = useState(1)
 
-	const [dummyCard, setDummyCard] = useFetch('https://swapi.dev/api/people/1/?format=json')
+	const [dummyCard, setDummyCard] = useFetch('')
 
 	// const addToKnownHandler = (id, status) => {
 	// 	setCards(prevState => {
