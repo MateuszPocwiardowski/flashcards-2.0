@@ -28,22 +28,6 @@ const CARDS = [
 		plSentence: 'Chcemy zatrudzić dziewczynę stanu wolnego jako opiekunkę dla dzieci.',
 		status: 'unknown',
 	},
-	{
-		id: 3,
-		engWord: `single`,
-		plWord: `stanu wolnego`,
-		engSentence: `We are looking to hire a single girl as an au pair.`,
-		plSentence: 'Chcemy zatrudzić dziewczynę stanu wolnego jako opiekunkę dla dzieci.',
-		status: 'unknown',
-	},
-	{
-		id: 4,
-		engWord: `single`,
-		plWord: `stanu wolnego`,
-		engSentence: `We are looking to hire a single girl as an au pair.`,
-		plSentence: 'Chcemy zatrudzić dziewczynę stanu wolnego jako opiekunkę dla dzieci.',
-		status: 'unknown',
-	},
 ]
 
 const App = () => {

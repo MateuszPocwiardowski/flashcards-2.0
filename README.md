@@ -4,7 +4,11 @@ A simple flashcards app that shows my learning progress with React & Strapi.
 
 ## Used technologies
 - React
+- Material UI
+- MobX
 - Strapi
+- Heroku 
+- React testing library
 
 ## Repository cloning
 
