@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 // eslint-disable-next-line
 import useFetch from './hooks/useFetch'
 import Navbar from './components/Navbar/Navbar'
@@ -7,36 +7,24 @@ import Card from '@mui/material/Card'
 import Check from '@mui/icons-material/Check'
 import RefreshIcon from '@mui/icons-material/Refresh'
 import CloseIcon from '@mui/icons-material/Close'
+import { CircularProgress } from '@mui/material'
 import Text from './components/Text/Text'
 import PrimaryButton from './components/Buttons/PrimaryButton'
 import './App.css'
 
-const CARDS = [
-	{
-		id: 1,
-		engWord: `married`,
-		plWord: `w związku małżeńskim`,
-		engSentence: `Recruiters should not ask cadidates if they are merried.`,
-		plSentence: 'Rekruterzy nie powinni pytać kandydatów o to, czy są w związku małżeńskim.',
-		status: 'unknown',
-	},
-	{
-		id: 2,
-		engWord: `single`,
-		plWord: `stanu wolnego`,
-		engSentence: `We are looking to hire a single girl as an au pair.`,
-		plSentence: 'Chcemy zatrudzić dziewczynę stanu wolnego jako opiekunkę dla dzieci.',
-		status: 'unknown',
-	},
-]
-
 const App = () => {
-	const [cards, setCards] = useState(CARDS)
+	const [cards, setCards] = useState([])
 	const [turnedCard, setTurnedCard] = useState(false)
 	const [displayedCard, setDisplayedCard] = useState(1)
 
-	const { data, loading, error } = useFetch('https://swapi.dev/api/people/1/?format=json')
-	console.log(data, loading, error)
+	const { data, loading, error } = useFetch('http://localhost:1337/api/flashcards/')
+
+	useEffect(() => {
+		if (data != null) {
+			console.log(data, loading, error)
+			setCards(data.data)
+		}
+	}, [loading])
 
 	const addToKnownHandler = (id, status) => {
 		setCards(prevState => {
@@ -69,12 +57,29 @@ const App = () => {
 		setTurnedCard(false)
 	}
 
+	if (loading) {
+		return (
+			<div className='App'>
+				<Navbar />
+				<CircularProgress
+					sx={{
+						position: 'absolute',
+						top: '50%',
+						left: '50%',
+						transform: 'translate(-50%, -50%)',
+					}}
+				/>
+				<Footer />
+			</div>
+		)
+	}
+
 	return (
 		<div className='App'>
 			<Navbar />
 			{cards
 				.filter(card => displayedCard === card.id)
-				.map(({ id, engWord, engSentence, plWord, plSentence }) => (
+				.map(({ id, attributes }) => (
 					<Card
 						key={id}
 						sx={{
@@ -98,8 +103,8 @@ const App = () => {
 						</Text>
 						{turnedCard && (
 							<>
-								<Text sx={{ fontWeight: 700 }}>{engWord}</Text>
-								<Text sx={{ mb: 2 }}>{engSentence}</Text>
+								<Text sx={{ fontWeight: 700 }}>{attributes.wordENG}</Text>
+								<Text sx={{ mb: 2 }}>{attributes.sentenceENG}</Text>
 								<PrimaryButton
 									variant='contained'
 									color='success'
@@ -125,12 +130,13 @@ const App = () => {
 
 						{!turnedCard && (
 							<>
-								<Text sx={{ fontWeight: 700 }}>{plWord}</Text>
-								<Text sx={{ mb: 2 }}>{plSentence}</Text>
+								<Text sx={{ fontWeight: 700 }}>{attributes.wordPL}</Text>
+								<Text sx={{ mb: 2 }}>{attributes.sentencePL}</Text>
 								<PrimaryButton
 									variant='contained'
 									color='primary'
 									endIcon={<RefreshIcon />}
+									sx={{ m: 1 }}
 									onClick={() => {
 										setTurnedCard(true)
 									}}>
