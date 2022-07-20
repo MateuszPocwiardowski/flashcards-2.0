@@ -12,7 +12,7 @@ const useFetch = url => {
 				const response = await fetch(url)
 
 				if (!response.ok) {
-					throw new Error('Niewłaściwy url')
+					throw new Error('Niewłaściwy URL')
 				}
 
 				const json = await response.json()

@@ -21,39 +21,38 @@ const App = () => {
 
 	useEffect(() => {
 		if (data != null) {
-			console.log(data, loading, error)
 			setCards(data.data)
 		}
 	}, [loading])
 
-	const addToKnownHandler = (id, status) => {
-		setCards(prevState => {
-			const updatedTask = prevState.map(card => ({
-				id: card.id,
-				engWord: card.engWord,
-				plWord: card.plWord,
-				engSentence: card.engSentence,
-				plSentence: card.plSentence,
-				status: card.id === id ? 'known' : card.status,
-			}))
-			return updatedTask
-		})
+	const addToKnownHandler = (id) => {
+		// setCards(prevState => {
+		// 	const updatedTask = prevState.map(card => ({
+		// 		id: card.id,
+		// 		engWord: card.attributes.wordENG,
+		// 		plWord: card.attributes.wordPL,
+		// 		engSentence: card.attributes.sentenceENG,
+		// 		plSentence: card.attributes.sentencePL,
+		// 		status: card.id === id ? 'known' : card.card.attributes.status,
+		// 	}))
+		// 	return updatedTask
+		// })
 		setTurnedCard(false)
 		setDisplayedCard(prevState => (prevState += 1))
 	}
 
-	const addToUnknownHandler = (id, status) => {
-		setCards(prevState => {
-			const updatedTask = prevState.map(card => ({
-				id: card.id,
-				engWord: card.engWord,
-				plWord: card.plWord,
-				engSentence: card.engSentence,
-				plSentence: card.plSentence,
-				status: card.id === id ? 'unknown' : card.status,
-			}))
-			return updatedTask
-		})
+	const addToUnknownHandler = (id) => {
+		// setCards(prevState => {
+		// 	const updatedTask = prevState.map(card => ({
+		// 		id: card.id,
+		// 		engWord: card.attributes.wordENG,
+		// 		plWord: card.attributes.wordPL,
+		// 		engSentence: card.attributes.sentenceENG,
+		// 		plSentence: card.attributes.sentencePL,
+		// 		status: card.id === id ? 'unknown' : card.status,
+		// 	}))
+		// 	return updatedTask
+		// })
 		setTurnedCard(false)
 	}
 
@@ -69,6 +68,25 @@ const App = () => {
 						transform: 'translate(-50%, -50%)',
 					}}
 				/>
+				<Footer />
+			</div>
+		)
+	}
+
+	if (error) {
+		return (
+			<div className='App'>
+				<Navbar />
+				<Card
+					sx={{
+						position: 'absolute',
+						top: '50%',
+						left: '50%',
+						padding: '2rem 4rem',
+						transform: 'translate(-50%, -50%)',
+					}}>
+					<Text sx={{ color: 'red', fontWeight: 700 }}>{error}</Text>
+				</Card>
 				<Footer />
 			</div>
 		)
